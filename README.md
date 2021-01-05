@@ -27,6 +27,7 @@ Eg: AC=1x26¹+3x26⁰=29
 
 ### Feature Engineering
 SVD Features: Single Value Decomposition is a method that decomposes a matrix into three components: U,Σ,V where U(left singular matrix) and V(right singular matrix) represents the given data in a different perspective and Σ(singular) represents strength of each perspective.
+
 For example: Consider a matrix with rows representing different users,columns with different movies and the values in the matrix are the ratings given by users to different movies. Upon applying SVD on this matrix, U matrix would represent the liking of each user to different genres (thriller,crime,romance), V matrix would represent the genre to which each movie is likely to belong to and Σ represents the strength of each genre. Thus, SVD transforms the given data into different concepts(features) which machine learning models find it hard to find out.
 
 ### Machine Learning Models
@@ -45,7 +46,7 @@ The best value of k was found to 23. Though this model took long time to compute
    - Max-depth: This is one of the most important hyper parameter for XGBoost model, determining the depth of each tree. I found a depth of 4 to 7 would work well as the train and cv curves would start to diverge at higher number of rounds.
    - subsample and colsample_bytree: Subsample specifies the percent of rows and colsample_bytree specifies the percent of features to be considered to build decision trees. Subsample of 1 and colsample_bytree of 0.3 gave lower train and cv error and hence, were considered.
    - eta: eta(also called shrinkage parameter)refers to the amount of weight-age to be given to each tree. eta=0.1 was found to be optimal value.   
-With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
+   With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
 
 ![Feature-Importance](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/XGBoostFeatureImportance.png)
 
