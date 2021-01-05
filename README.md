@@ -6,8 +6,8 @@ The data set provided for this competition had two files: train.csv and test.csv
 
 ### Performance Metric
 The performance metric used for this challenge was Mean Absolute Error (MAE).It is computed as the mean of absolute difference between the predicted loss and the actual loss. The aim was to get MAE value as low as possible on the test data set.
-
 ![PerformanceMetric](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/PerformanceMetric.png)
+
 ### Exploratory Data Analysis
 1. Loss Feature: The loss value was highly right skewed. Training machine learning models on such skewed data would not generalize and performs poorly on test data set. One solution was to apply log-transform. This resulted in normal like distribution.
 
@@ -33,6 +33,7 @@ For example: Consider a matrix with rows representing different users,columns wi
 ### Machine Learning Models
 1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272. A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
 2. KNN Regressor: The only hyper parameter to be tuned is the number of nearest neighbors (k value). The data was split into two parts: train and cross validation (cv) and were normalized. For different values of k, knn model was fit on train data and evaluated on cv data. The train and cv loss curves were obtained as shown below:
+![Knn_Plot](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/KaggleScore.png)
 
 The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
 
