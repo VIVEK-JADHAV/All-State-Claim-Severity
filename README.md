@@ -30,24 +30,22 @@ SVD Features: Single Value Decomposition is a method that decomposes a matrix in
 For example: Consider a matrix with rows representing different users,columns with different movies and the values in the matrix are the ratings given by users to different movies. Upon applying SVD on this matrix, U matrix would represent the liking of each user to different genres (thriller,crime,romance), V matrix would represent the genre to which each movie is likely to belong to and Σ represents the strength of each genre. Thus, SVD transforms the given data into different concepts(features) which machine learning models find it hard to find out.
 
 ### Machine Learning Models
-1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272. 
-
+1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272.
    A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method   marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
 
 2. KNN Regressor: The only hyper parameter to be tuned is the number of nearest neighbors (k value). The data was split into two parts: train and cross validation (cv) and were normalized. For different values of k, knn model was fit on train data and evaluated on cv data. The train and cv loss curves were obtained as shown below:
 
 ![Knn_Plot](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/KnnPlot.png)
 
-The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
+   The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
 
 3. Random Forest: A tree based bagging model, was used to compute the loss. Though Random Forest has very low evaluation time(because of bunch of if-else conditions)and highly parallelizable(a tree can be built independent of other trees), it has very high training time(to determine the best split, it looks at every feature and every value in a feature).The main hyper parameters to be tuned are the number of estimators and tree depth. To train Random forest with 100 trees, each tree having a depth of 50 and considering only 50,000 samples at a time, it took around three hours. The wait did not go in vain as it produced a much improved Kaggle test MAE of 1221.
 
 4. XGBoost Single Model: XGBoost is a tree based boosting method. It is a form of Gradient Boosted decision trees with both row sampling and column sampling. It has a bunch of hyper parameters, which when tuned accurately, gives great results. Some of the important hyper parameters are:
    - Max-depth: This is one of the most important hyper parameter for XGBoost model, determining the depth of each tree. I found a depth of 4 to 7 would work well as the train and cv curves would start to diverge at higher number of rounds.
    - subsample and colsample_bytree: Subsample specifies the percent of rows and colsample_bytree specifies the percent of features to be considered to build decision trees. Subsample of 1 and colsample_bytree of 0.3 gave lower train and cv error and hence, were considered.
-   - eta: eta(also called shrinkage parameter)refers to the amount of weight-age to be given to each tree. eta=0.1 was found to be optimal value.
-   
-With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
+   - eta: eta(also called shrinkage parameter)refers to the amount of weight-age to be given to each tree. eta=0.1 was found to be optimal value.   
+   With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
 
 ![Feature-Importance](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/XGBoostFeatureImportance.png)
 
