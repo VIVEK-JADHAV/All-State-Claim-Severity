@@ -23,17 +23,19 @@ The performance metric used for this challenge was Mean Absolute Error (MAE).It 
 ### Feature Transform
 The categorical features have to be converted to numerical values. There were many categorical features(Eg: cat90) which had few categories only in test data and not in train data. If techniques like one-hot encoding, label encoding are to be used, then both train and test data set have to be merged, resulting in data leakage. To overcome this issue, lexical encoding was performed. In this technique, alphabets were converted to their corresponding numerical values similar to conversion from numerical to binary.
 
-Eg: AC=1*26¹+3*26⁰=29
+Eg: AC=1x26¹+3x26⁰=29
 
 ### Feature Engineering
 SVD Features: Single Value Decomposition is a method that decomposes a matrix into three components: U,Σ,V where U(left singular matrix) and V(right singular matrix) represents the given data in a different perspective and Σ(singular) represents strength of each perspective.
 For example: Consider a matrix with rows representing different users,columns with different movies and the values in the matrix are the ratings given by users to different movies. Upon applying SVD on this matrix, U matrix would represent the liking of each user to different genres (thriller,crime,romance), V matrix would represent the genre to which each movie is likely to belong to and Σ represents the strength of each genre. Thus, SVD transforms the given data into different concepts(features) which machine learning models find it hard to find out.
 
 ### Machine Learning Models
-1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272. A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
+1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272. 
+A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
 2. KNN Regressor: The only hyper parameter to be tuned is the number of nearest neighbors (k value). The data was split into two parts: train and cross validation (cv) and were normalized. For different values of k, knn model was fit on train data and evaluated on cv data. The train and cv loss curves were obtained as shown below:
 
-![Knn_Plot](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/KnnPlot.png)
+               ![Knn_Plot](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/KnnPlot.png)
+
 The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
 
 3. Random Forest: A tree based bagging model, was used to compute the loss. Though Random Forest has very low evaluation time(because of bunch of if-else conditions)and highly parallelizable(a tree can be built independent of other trees), it has very high training time(to determine the best split, it looks at every feature and every value in a feature).The main hyper parameters to be tuned are the number of estimators and tree depth. To train Random forest with 100 trees, each tree having a depth of 50 and considering only 50,000 samples at a time, it took around three hours. The wait did not go in vain as it produced a much improved Kaggle test MAE of 1221.
