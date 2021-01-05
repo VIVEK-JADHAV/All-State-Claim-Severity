@@ -32,7 +32,7 @@ For example: Consider a matrix with rows representing different users,columns wi
 ### Machine Learning Models
 1. Linear SVR: The data was normalized using Sklearn's StandardScalar. The two hyper parameters, C and epsilon were determined using RandomSearchCV. The best values were found to be C=0.01 and epsilon=0.01. The model returned a train MAE value of 1272. 
 
-A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
+   A feature selection technique called Recursive Feature Elimination was applied. In this method, features are recursively dropped and best features are retained.This method   marginally improved the MAE value. However, the MAE value for Kaggle test data set was a high score of 1417, indicating that the linear models may not perform satisfactorily.
 
 2. KNN Regressor: The only hyper parameter to be tuned is the number of nearest neighbors (k value). The data was split into two parts: train and cross validation (cv) and were normalized. For different values of k, knn model was fit on train data and evaluated on cv data. The train and cv loss curves were obtained as shown below:
 
