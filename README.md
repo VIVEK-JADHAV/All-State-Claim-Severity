@@ -37,7 +37,7 @@ For example: Consider a matrix with rows representing different users,columns wi
 
 ![Knn_Plot](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/KnnPlot.png)
 
-   The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
+The best value of k was found to 23. Though this model took long time to compute, the MAE on Kaggle test data was improved to 1330.
 
 3. Random Forest: A tree based bagging model, was used to compute the loss. Though Random Forest has very low evaluation time(because of bunch of if-else conditions)and highly parallelizable(a tree can be built independent of other trees), it has very high training time(to determine the best split, it looks at every feature and every value in a feature).The main hyper parameters to be tuned are the number of estimators and tree depth. To train Random forest with 100 trees, each tree having a depth of 50 and considering only 50,000 samples at a time, it took around three hours. The wait did not go in vain as it produced a much improved Kaggle test MAE of 1221.
 
@@ -45,7 +45,7 @@ For example: Consider a matrix with rows representing different users,columns wi
    - Max-depth: This is one of the most important hyper parameter for XGBoost model, determining the depth of each tree. I found a depth of 4 to 7 would work well as the train and cv curves would start to diverge at higher number of rounds.
    - subsample and colsample_bytree: Subsample specifies the percent of rows and colsample_bytree specifies the percent of features to be considered to build decision trees. Subsample of 1 and colsample_bytree of 0.3 gave lower train and cv error and hence, were considered.
    - eta: eta(also called shrinkage parameter)refers to the amount of weight-age to be given to each tree. eta=0.1 was found to be optimal value.   
-   With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
+With these hyper parameters, the XGBoost model was trained for 1500 rounds with early stopping of 25 rounds(training would stop if there is no improvement in score for 25 rounds). The Kaggle test MAE for this model was an impressive 1130. More importantly, most of the important features were svd features and distance features.
 
 ![Feature-Importance](https://github.com/VIVEK-JADHAV/ClaimPrediction/blob/master/Images/XGBoostFeatureImportance.png)
 
